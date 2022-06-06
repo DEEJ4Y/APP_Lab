@@ -1,64 +1,65 @@
-import tkinter as tk
 from tkinter import *
-from tkinter import messagebox
+fields = ('Customer ID', 'Customer Name',
+          'Branch', 'Monthly Payment', 'Remaining')
 
 
-def hello1():
-    msg = messagebox.showinfo("Confirmation", "Inserted Sucessfully")
+def monthly_payment(entries):
+    # period rate:
+    r = (float(entries['Annual Rate'].get()) / 100) / 12
+    print("r", r)
+    # principal loan:
+    loan = float(entries['Loan Principle'].get())
+    n = float(entries['Number of Payments'].get())
+    remaining_loan = float(entries['Remaining Loan'].get())
+    q = (1 + r) ** n
+    monthly = r * ((q * loan - remaining_loan) / (q - 1))
+    monthly = ("%8.2f" % monthly).strip()
+    entries['Monthly Payment'].delete(0, END)
+    entries['Monthly Payment'].insert(0, monthly)
+    print("Monthly Payment: %f" % float(monthly))
 
 
-def hello2():
-    msg = messagebox.showinfo("Confirmation", "Updated Sucessfully")
+def final_balance(entries):
+    # period rate:
+    r = (float(entries['Annual Rate'].get()) / 100) / 12
+    print("r", r)
+    # principal loan:
+    loan = float(entries['Loan Principle'].get())
+    n = float(entries['Number of Payments'].get())
+    q = (1 + r) ** n
+    monthly = float(entries['Monthly Payment'].get())
+    q = (1 + r) ** n
+    remaining = q * loan - ((q - 1) / r) * monthly
+    remaining = ("%8.2f" % remaining).strip()
+    entries['Remaining Loan'].delete(0, END)
+    entries['Remaining Loan'].insert(0, remaining)
+    print("Remaining Loan: %f" % float(remaining))
 
 
-def hello3():
-    msg = messagebox.showinfo("Confirmation", "Deleted Sucessfully")
+def makeform(root, fields):
+    entries = {}
+    for field in fields:
+        row = Frame(root)
+        lab = Label(row, width=22, text=field+": ", anchor='w')
+        ent = Entry(row)
+        ent.insert(0, "0")
+        row.pack(side=TOP, fill=X, padx=5, pady=5)
+        lab.pack(side=LEFT)
+        ent.pack(side=RIGHT, expand=YES, fill=X)
+        entries[field] = ent
+    return entries
 
 
-def hello4():
-    msg = messagebox.showinfo("Confirmation", "Select Button")
-
-
-root = tk.Tk()
-root.title('form')
-root.geometry('500x200')
-l1 = tk.Label(root, text="Regno")
-l1.grid(row=0)
-t1 = tk.Entry(root)
-t1.grid(row=0, column=1)
-l2 = tk.Label(root, text="Name:")
-l2.grid(row=1)
-t2 = tk.Entry(root)
-t2.grid(row=1, column=1)
-v = StringVar(root, value='CSE')
-l3 = tk.Label(root, text="Dept")
-l3.grid(row=2)
-t3 = tk.Entry(root, textvariable=v)
-t3.grid(row=2, column=1)
-l4 = tk.Label(root, text="Gender")
-l4.grid(row=3)
-radio1 = IntVar()
-radio2 = IntVar()
-rb1 = Radiobutton(root, text='Male', variable=radio1, value=0)
-rb1.grid(row=3, column=1)
-rb2 = Radiobutton(root, text='Female', variable=radio1, value=1)
-rb2.grid(row=3, column=2)
-rb3 = Radiobutton(root, text='Female', variable=radio1, value=2)
-rb3.grid(row=3, column=3)
-rb4 = Radiobutton(root, text='Female', variable=radio1, value=3)
-rb4.grid(row=3, column=4)
-rb5 = Radiobutton(root, text='Female', variable=radio1, value=4)
-rb5.grid(row=3, column=5)
-l5 = tk.Label(root, text="Age")
-l5.grid(row=4)
-spin = Spinbox(root, from_=15, to=20)
-spin.grid(row=4, column=1)
-b1 = tk.Button(root, text='Insert', command=hello1)
-b1.grid(row=5, column=0)
-b2 = tk.Button(root, text='Update', command=hello2)
-b2.grid(row=5, column=1)
-b3 = tk.Button(root, text='Delete', command=hello3)
-b3.grid(row=6, column=0)
-b4 = tk.Button(root, text='Select', command=hello4)
-b4.grid(row=6, column=1)
-root.mainloop()
+if __name__ == '__main__':
+    root = Tk()
+    ents = makeform(root, fields)
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))
+    b1 = Button(root, text='Final Balance',
+                command=(lambda e=ents: final_balance(e)))
+    b1.pack(side=LEFT, padx=5, pady=5)
+    b2 = Button(root, text='Monthly Payment',
+                command=(lambda e=ents: monthly_payment(e)))
+    b2.pack(side=LEFT, padx=5, pady=5)
+    b3 = Button(root, text='Quit', command=root.quit)
+    b3.pack(side=LEFT, padx=5, pady=5)
+    root.mainloop()

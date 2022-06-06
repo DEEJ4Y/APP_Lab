@@ -1,58 +1,52 @@
 import tkinter as tk
-from tkinter import *
-from tkinter import messagebox
+OptionList1 = [
+    "USD",
+]
+OptionList2 = [
+    "indianrs",
+    "srilankars",
+]
 
 
-def hello1():
-    msg = messagebox.showinfo("Confirmation", "Inserted Sucessfully")
+def Ok():
 
-
-def hello2():
-    msg = messagebox.showinfo("Confirmation", "Updated Sucessfully")
-
-
-def hello3():
-    msg = messagebox.showinfo("Confirmation", "Deleted Sucessfully")
-
-
-def hello4():
-    msg = messagebox.showinfo("Confirmation", "Select Button")
+    fr = variable.get()
+    to = variable1.get()
+    amount = float(e1.get())
+    if (fr == "USD" and to == "indianrs"):
+        tot = amount * 180
+    else:
+        tot = amount * 120
+    nsalText.set(tot)
 
 
 root = tk.Tk()
-root.title('tk')
 root.geometry('300x200')
-l1 = tk.Label(root, text="Regno")
-l1.grid(row=0)
-t1 = tk.Entry(root)
-t1.grid(row=0, column=1)
-l2 = tk.Label(root, text="Name:")
-l2.grid(row=1)
-t2 = tk.Entry(root)
-t2.grid(row=1, column=1)
-v = StringVar(root, value='CSE')
-l3 = tk.Label(root, text="Dept")
-l3.grid(row=2)
-t3 = tk.Entry(root, textvariable=v)
-t3.grid(row=2, column=1)
-l4 = tk.Label(root, text="Gender")
-l4.grid(row=3)
-radio1 = IntVar()
-radio2 = IntVar()
-rb1 = Radiobutton(root, text='Male', variable=radio1, value=0)
-rb1.grid(row=3, column=1)
-rb2 = Radiobutton(root, text='Female', variable=radio1, value=1)
-rb2.grid(row=3, column=2)
-l5 = tk.Label(root, text="Age")
-l5.grid(row=4)
-spin = Spinbox(root, from_=15, to=20)
-spin.grid(row=4, column=1)
-b1 = tk.Button(root, text='Insert', command=hello1)
-b1.grid(row=5, column=0)
-b2 = tk.Button(root, text='Update', command=hello2)
-b2.grid(row=5, column=1)
-b3 = tk.Button(root, text='Delete', command=hello3)
-b3.grid(row=6, column=0)
-b4 = tk.Button(root, text='Select', command=hello4)
-b4.grid(row=6, column=1)
+root.title("Currency Converver System Python")
+variable = tk.StringVar(root)
+variable.set(OptionList1[0])
+opt = tk.OptionMenu(root, variable, *OptionList1)
+opt.config(width=10, font=('Helvetica', 12))
+opt.pack(side="top")
+variable1 = tk.StringVar(root)
+variable1.set(OptionList2[0])
+opt = tk.OptionMenu(root, variable1, *OptionList2)
+opt.config(width=10, font=('Helvetica', 12))
+opt.pack(side="top")
+global e1
+global nsalText
+nsalText = tk.StringVar()
+labelTest = tk.Label(text="", font=('Helvetica', 12), fg='red')
+labelTest.pack(side="top")
+tk.Label(root, text="From").place(x=10, y=10)
+tk.Label(root, text="To").place(x=10, y=40)
+tk.Label(root, text="Amount").place(x=10, y=80)
+tk.Label(root, text="Total:").place(x=10, y=150)
+tk.Label(root, text="", font=('Helvetica', 12),
+         fg='red', textvariable=nsalText).p
+tk.Button(root, text="Cal", command=Ok,
+          height=1, width=3).place(x=100, y=110)
+e1 = tk.Entry(root)
+e1.place(x=80, y=80)
+
 root.mainloop()

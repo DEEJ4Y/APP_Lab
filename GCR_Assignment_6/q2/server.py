@@ -1,31 +1,19 @@
-import socket
+import socket  # Import socket module
 
+s = socket.socket()  # Create a socket object
+host = socket.gethostname()  # Get local machine name
+port = 12345  # Reserve a port for your service.
+s.bind((host, port))  # Bind to the port
+print(f'Server started at {host}:{port}')
+s.listen(5)  # Now wait for client connection.
 
-def createSocket():
-    s = socket.socket()
-    host = "127.0.0.1"
-    port = 3000
-
-    s.bind((host, port))
-
-    return s
-
-
-def waitForConnections():
-    print("Server started on port 3000")
-    print("Waiting for connection...")
-    s = createSocket()
-    s.listen(5)
-
-    listen = True
-
-    while listen:
-        conn, addr = s.accept()
-        print(f"Connection started from {addr}")
-        conn.send("ls && pwd".encode("utf-8"))
-        conn.close()
-        break
-
-
-if __name__ == "__main__":
-    waitForConnections()
+while True:
+    c, addr = s.accept()  # Establish connection with client.
+    print('Got connection from', addr)
+    req1 = c.recv(1024)
+    req1 = str(req1, 'utf-8')
+    str1 = req1.upper()
+    # print(str1)
+    str1 = bytes(str1, 'UTF-8')
+    c.send(str1)
+    c.close()

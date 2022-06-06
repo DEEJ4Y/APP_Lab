@@ -1,63 +1,70 @@
-import tkinter as tk
+# Tkinter Student Register
 from tkinter import *
-from tkinter import messagebox
+from tkcalendar import Calendar, DateEntry
 
-
-def hello1():
-    msg = messagebox.showinfo("Confirmation", "Inserted Sucessfully")
-
-
-def hello2():
-    msg = messagebox.showinfo("Confirmation", "Updated Sucessfully")
-
-
-def hello3():
-    msg = messagebox.showinfo("Confirmation", "Deleted Sucessfully")
-
-
-def hello4():
-    msg = messagebox.showinfo("Confirmation", "Select Button")
-
-
-root = tk.Tk()
-root.title('form')
-root.geometry('500x200')
-l1 = tk.Label(root, text="Regno")
-l1.grid(row=0)
-t1 = tk.Entry(root)
-t1.grid(row=0, column=1)
-l2 = tk.Label(root, text="Name:")
-l2.grid(row=1)
-t2 = tk.Entry(root)
-t2.grid(row=1, column=1)
-v = StringVar(root, value='CSE')
-l3 = tk.Label(root, text="Dept")
-l3.grid(row=2)
-t3 = tk.Entry(root, textvariable=v)
-t3.grid(row=2, column=1)
-l4 = tk.Label(root, text="Gender")
-l4.grid(row=3)
-radio1 = IntVar()
-cb = IntVar()
-cb1 = IntVar()
-rb1 = Radiobutton(root, text='Male', variable=radio1, value=0)
-rb1.grid(row=3, column=1)
-rb2 = Radiobutton(root, text='Female', variable=radio1, value=1)
-rb2.grid(row=3, column=2)
-cb1 = Checkbutton(root, text="9:00 AM", variable=cb, height=2, width=10)
-cb1.grid(row=3, column=3)
-cb2 = Checkbutton(root, text="7:00 AM", variable=cb1, height=2, width=10)
-cb2.grid(row=3, column=4)
-l5 = tk.Label(root, text="Age")
-l5.grid(row=4)
-spin = Spinbox(root, from_=15, to=20)
-spin.grid(row=4, column=1)
-b1 = tk.Button(root, text='Insert', command=hello1)
-b1.grid(row=5, column=0)
-b2 = tk.Button(root, text='Update', command=hello2)
-b2.grid(row=5, column=1)
-b3 = tk.Button(root, text='Delete', command=hello3)
-b3.grid(row=6, column=0)
-b4 = tk.Button(root, text='Select', command=hello4)
-b4.grid(row=6, column=1)
+root = Tk()
+root.geometry('500x500')
+root.title("Registration Form")
+label_0 = Label(root, text="Registration form", width=20, font=("bold", 20))
+label_0.place(x=90, y=53)
+label_1 = Label(root, text="FullName", width=20, font=("bold", 10))
+label_1.place(x=80, y=130)
+entry_1 = Entry(root)
+entry_1.place(x=240, y=130)
+label_2 = Label(root, text="Email", width=20, font=("bold", 10))
+label_2.place(x=68, y=180)
+entry_2 = Entry(root)
+entry_2.place(x=240, y=180)
+label_3 = Label(root, text="Gender", width=20, font=("bold", 10))
+label_3.place(x=70, y=230)
+var = IntVar()
+Radiobutton(root, text="Male", padx=5, variable=var,
+            value=1).place(x=235, y=230)
+Radiobutton(root, text="Female", padx=20,
+            variable=var, value=2).place(x=290, y=230)
+label_4 = Label(
+    root, text="Age:", width=20, font=("bold", 10))
+label_4.place(
+    x=70, y=280)
+entry_3 = Entry(
+    root)
+entry_3.place(
+    x=240, y=280)
+label_5 = Label(
+    root, text="Reg. No.:", width=20, font=("bold", 10))
+label_5.place(
+    x=70, y=330)
+entry_4 = Entry(
+    root)
+entry_4.place(
+    x=240, y=330)
+label_6 = Label(
+    root, text="Address:", width=20, font=("bold", 10))
+label_6.place(
+    x=70, y=380)
+entry_5 = Entry(
+    root)
+entry_5.place(
+    x=240, y=380)
+label_7 = Label(
+    root, text="Email ID:", width=20, font=("bold", 10))
+label_7.place(
+    x=70, y=430)
+entry_6 = Entry(
+    root)
+entry_6.place(
+    x=240, y=430)
+# Create a Label
+label_8 = Label(
+    root, text="Date of Birth", width=20, font=("bold", 10))
+label_8.place(
+    x=77, y=480)
+# Create a Calendar using DateEntry
+cal = DateEntry(root, width=16, background="magenta3",
+                foreground="white", bd=2)
+cal.place(
+    x=240, y=480)
+Button(root, text='Submit', width=20, bg='brown',
+       fg='white').place(x=180, y=530)
+# it is use for display the registration form on the rootdow
 root.mainloop()
